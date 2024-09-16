@@ -18,7 +18,6 @@ var current_health: float :
 			bank.gold += gold_value
 			queue_free()
 
-var enabled: = true
 
 func _ready() -> void:
 	current_health = max_health
@@ -27,7 +26,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	progress += delta * speed
 	
-	if progress_ratio == 1 and enabled:
+	if progress_ratio == 1:
 		base.take_damage()
 		set_process(false)
-		#enabled = false
+		queue_free()

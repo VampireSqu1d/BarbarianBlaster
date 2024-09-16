@@ -12,7 +12,7 @@ func _ready() -> void:
 	pass
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	target = find_best_target()
 	if target:
 		look_at(target.global_position, Vector3.UP, true)

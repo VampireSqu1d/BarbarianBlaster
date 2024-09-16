@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6rrtvyw3vr26"]
+[gd_scene load_steps=16 format=3 uid="uid://c6rrtvyw3vr26"]
 
 [ext_resource type="PackedScene" uid="uid://b4sydku5qhq6l" path="res://scenes/ray_picker_camera.tscn" id="1_b8csa"]
 [ext_resource type="MeshLibrary" uid="uid://m3alxb5mb5c4" path="res://MeshLibraries/SpaceLibrary.tres" id="1_hsj2n"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/turret_manager.gd" id="5_kg6dv"]
 [ext_resource type="PackedScene" uid="uid://b4gvf04r7d8bx" path="res://scenes/turret.tscn" id="6_tbijb"]
 [ext_resource type="Script" path="res://scripts/bank.gd" id="8_ompyu"]
+[ext_resource type="PackedScene" uid="uid://cn8qergfy0mmt" path="res://scenes/difficulty_manager.tscn" id="9_lrg76"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p1u2k"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -64,10 +65,11 @@ data = {
 "cells": PackedInt32Array(65535, 65534, 0, 65535, 2, 0, 4, 65535, 0, 65530, 65535, 0, 65530, 65534, 0, 65530, 0, 0, 65531, 65534, 0, 65531, 2, 0, 65532, 2, 0, 65533, 65534, 0, 65533, 2, 0, 65534, 65534, 0, 65534, 2, 0, 0, 65534, 0, 0, 2, 0, 1, 65534, 0, 1, 2, 0, 2, 65534, 0, 2, 2, 0, 3, 65534, 0, 3, 2, 0, 4, 65534, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 65530, 2, 0, 65531, 65535, 0)
 }
 
-[node name="EnemyPath3D" type="Path3D" parent="."]
+[node name="EnemyPath3D" type="Path3D" parent="." node_paths=PackedStringArray("difficulty_manager")]
 curve = SubResource("Curve3D_0t7fp")
 script = ExtResource("3_qtkth")
 enemy_scene = ExtResource("2_qd3o1")
+difficulty_manager = NodePath("../DifficultyManager")
 
 [node name="Road" type="CSGPolygon3D" parent="EnemyPath3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -85,7 +87,6 @@ path_joined = false
 
 [node name="RightEdge" type="CSGPolygon3D" parent="EnemyPath3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-visible = false
 polygon = PackedVector2Array(0.9, 0, 0.9, 0.15, 1.1, 0.15, 1.1, 0)
 mode = 2
 path_node = NodePath("..")
@@ -111,31 +112,6 @@ path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
-
-[node name="Enemy" parent="EnemyPath3D" instance=ExtResource("2_qd3o1")]
-transform = Transform3D(0.00309984, -7.0169e-05, -0.999985, 0, 0.999992, -7.01692e-05, 0.999985, 2.17516e-07, 0.00309984, -29.7872, -0.140697, 6.22109)
-speed = 4.5
-max_health = 51.0
-
-[node name="Enemy2" parent="EnemyPath3D" instance=ExtResource("2_qd3o1")]
-transform = Transform3D(-0.0125575, -7.1615e-05, -0.999911, -1.10997e-06, 0.999992, -7.16066e-05, 0.999911, 2.10676e-07, -0.0125575, -24.7877, -0.140339, 6.2886)
-progress = 5.0
-speed = 4.5
-
-[node name="Enemy3" parent="EnemyPath3D" instance=ExtResource("2_qd3o1")]
-transform = Transform3D(-0.0108901, -7.14611e-05, -0.999931, -9.90703e-07, 0.999992, -7.14544e-05, 0.999931, 2.12493e-07, -0.0108901, -19.788, -0.139981, 6.34724)
-progress = 10.0
-speed = 4.5
-
-[node name="Enemy4" parent="EnemyPath3D" instance=ExtResource("2_qd3o1")]
-transform = Transform3D(-0.00906236, -7.12923e-05, -0.999949, -8.60246e-07, 0.999992, -7.12873e-05, 0.999949, 2.14174e-07, -0.00906236, -14.7883, -0.139624, 6.39723)
-progress = 15.0
-speed = 4.5
-
-[node name="Enemy5" parent="EnemyPath3D" instance=ExtResource("2_qd3o1")]
-transform = Transform3D(-0.00684908, -7.10879e-05, -0.999966, -7.02682e-07, 0.999992, -7.10845e-05, 0.999966, 2.15797e-07, -0.00684908, -9.78841, -0.139268, 6.43723)
-progress = 20.0
-speed = 4.5
 
 [node name="EnemyTimer" type="Timer" parent="EnemyPath3D"]
 unique_name_in_owner = true
@@ -172,4 +148,7 @@ size_flags_vertical = 8
 text = "Money: 32"
 label_settings = SubResource("LabelSettings_q3m4m")
 
+[node name="DifficultyManager" parent="." instance=ExtResource("9_lrg76")]
+
 [connection signal="timeout" from="EnemyPath3D/EnemyTimer" to="EnemyPath3D" method="spawn_enemy"]
+[connection signal="stop_spawning_enemies" from="DifficultyManager" to="EnemyPath3D" method="_on_difficulty_manager_stop_spawning_enemies"]
