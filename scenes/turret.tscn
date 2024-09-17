@@ -1,26 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4gvf04r7d8bx"]
+[gd_scene load_steps=8 format=3 uid="uid://b4gvf04r7d8bx"]
 
 [ext_resource type="Script" path="res://scripts/turret.gd" id="1_hgr7u"]
 [ext_resource type="PackedScene" uid="uid://ipdnnt5carm2" path="res://scenes/projectile.tscn" id="1_sk7qo"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_7hewf"]
-height = 1.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_6huyy"]
-top_radius = 0.6
-bottom_radius = 0.6
-height = 0.6
-
-[sub_resource type="BoxMesh" id="BoxMesh_ffahi"]
-size = Vector3(0.6, 0.3, 0.3)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_l0eh3"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 0.5
+[ext_resource type="PackedScene" uid="uid://dxynkn8c2vf45" path="res://assets/Cannon.glb" id="3_wl7m1"]
+[ext_resource type="PackedScene" uid="uid://bt6pjl3r0528p" path="res://assets/TurretBase.glb" id="4_ydeo8"]
 
 [sub_resource type="Animation" id="Animation_v1hon"]
 length = 0.001
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -57,27 +44,20 @@ _data = {
 }
 
 [node name="Turret" type="Node3D"]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_hgr7u")
 projectile_scene = ExtResource("1_sk7qo")
 
-[node name="TurretBase" type="MeshInstance3D" parent="."]
+[node name="TurretBase" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CylinderMesh_7hewf")
 
-[node name="TurretTop" type="MeshInstance3D" parent="TurretBase"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-mesh = SubResource("CylinderMesh_6huyy")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="TurretBase/TurretTop"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.647124)
-mesh = SubResource("BoxMesh_ffahi")
-
-[node name="Barrel" type="MeshInstance3D" parent="TurretBase/TurretTop/MeshInstance3D2"]
+[node name="TurretTop" type="Node3D" parent="TurretBase"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.194515)
-mesh = SubResource("CylinderMesh_l0eh3")
-skeleton = NodePath("../..")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Cannon" parent="TurretBase/TurretTop" instance=ExtResource("3_wl7m1")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43632, 0)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
@@ -87,5 +67,11 @@ unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_jht40")
 }
+
+[node name="TurretBase2" parent="." instance=ExtResource("4_ydeo8")]
+
+[node name="Cannon" parent="." instance=ExtResource("3_wl7m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.22241, 0)
+visible = false
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

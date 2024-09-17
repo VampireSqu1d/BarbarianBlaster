@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c6rrtvyw3vr26"]
+[gd_scene load_steps=18 format=3 uid="uid://c6rrtvyw3vr26"]
 
 [ext_resource type="PackedScene" uid="uid://b4sydku5qhq6l" path="res://scenes/ray_picker_camera.tscn" id="1_b8csa"]
 [ext_resource type="MeshLibrary" uid="uid://m3alxb5mb5c4" path="res://MeshLibraries/SpaceLibrary.tres" id="1_hsj2n"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b4gvf04r7d8bx" path="res://scenes/turret.tscn" id="6_tbijb"]
 [ext_resource type="Script" path="res://scripts/bank.gd" id="8_ompyu"]
 [ext_resource type="PackedScene" uid="uid://cn8qergfy0mmt" path="res://scenes/difficulty_manager.tscn" id="9_lrg76"]
+[ext_resource type="PackedScene" uid="uid://blf7ksbofh0df" path="res://scenes/user_interface.tscn" id="10_m77po"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p1u2k"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -23,8 +24,8 @@ sky = SubResource("Sky_popng")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d1cb7"]
-albedo_color = Color(0.172549, 0.172549, 0.172549, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pwq88"]
+albedo_color = Color(0.560784, 0.6, 0.0156863, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_0t7fp"]
 _data = {
@@ -32,6 +33,9 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 point_count = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_553r0"]
+albedo_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q3m4m"]
 font_size = 52
@@ -48,10 +52,10 @@ environment = SubResource("Environment_54cqp")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 9.00412, 0)
 shadow_enabled = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 size = Vector3(100, 2, 100)
-material = SubResource("StandardMaterial3D_d1cb7")
+material = SubResource("StandardMaterial3D_pwq88")
 
 [node name="RayPickerCamera" parent="." node_paths=PackedStringArray("gridmap", "turret_manager") instance=ExtResource("1_b8csa")]
 gridmap = NodePath("../GridMap")
@@ -62,14 +66,15 @@ mesh_library = ExtResource("1_hsj2n")
 cell_size = Vector3(4, 4, 4)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65535, 65534, 0, 65535, 2, 0, 4, 65535, 0, 65530, 65535, 0, 65530, 65534, 0, 65530, 0, 0, 65531, 65534, 0, 65531, 2, 0, 65532, 2, 0, 65533, 65534, 0, 65533, 2, 0, 65534, 65534, 0, 65534, 2, 0, 0, 65534, 0, 0, 2, 0, 1, 65534, 0, 1, 2, 0, 2, 65534, 0, 2, 2, 0, 3, 65534, 0, 3, 2, 0, 4, 65534, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 65530, 2, 0, 65531, 65535, 0)
+"cells": PackedInt32Array(65535, 65534, 0, 65535, 2, 0, 4, 65535, 0, 65530, 65535, 655362, 65530, 65534, 3, 65531, 65534, 0, 65531, 2, 0, 65532, 2, 0, 65533, 65534, 0, 65533, 2, 1048578, 65534, 65534, 0, 65534, 2, 0, 0, 65534, 0, 0, 2, 0, 1, 65534, 0, 1, 2, 0, 2, 65534, 0, 2, 2, 0, 3, 65534, 0, 3, 2, 0, 4, 65534, 1441795, 4, 0, 0, 4, 1, 1441794, 4, 2, 0, 65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 65530, 2, 3, 65531, 65535, 1441795, 65530, 0, 655363, 65528, 65532, 1048578, 65528, 65533, 1048578, 65528, 65534, 1048578, 65528, 65535, 1048578, 65528, 0, 1048578, 65529, 65532, 1048578, 65529, 65533, 1048578, 65529, 65534, 1048578, 65529, 65535, 1048578, 65529, 0, 1048578, 65530, 65531, 3, 65531, 65531, 3, 65532, 65531, 3, 65533, 65531, 3, 65534, 65531, 3, 65535, 65531, 3, 0, 65531, 3, 1, 65531, 3, 2, 65531, 3, 3, 65531, 3, 4, 65531, 3, 5, 65531, 3, 5, 65534, 3, 5, 65535, 3, 5, 0, 3, 5, 1, 1441795, 5, 2, 1441795, 6, 65534, 3, 6, 65535, 3, 6, 0, 3, 6, 1, 3, 6, 2, 3, 6, 3, 3, 5, 3, 3, 4, 3, 1048579, 3, 3, 1048579, 2, 3, 3, 1, 3, 3, 65531, 3, 1048579, 65530, 3, 3, 65532, 3, 1048579, 65533, 3, 3, 65534, 3, 1441795, 65535, 3, 1441795, 0, 3, 3, 5, 65533, 2, 4, 65533, 2, 3, 65533, 2, 2, 65533, 2, 1, 65533, 2, 0, 65533, 2, 65535, 65533, 2, 65534, 65533, 2, 65533, 65533, 2, 65532, 65533, 2, 6, 65532, 3, 6, 65533, 3, 65530, 65532, 3)
 }
 
-[node name="EnemyPath3D" type="Path3D" parent="." node_paths=PackedStringArray("difficulty_manager")]
+[node name="EnemyPath3D" type="Path3D" parent="." node_paths=PackedStringArray("difficulty_manager", "victory_layer")]
 curve = SubResource("Curve3D_0t7fp")
 script = ExtResource("3_qtkth")
 enemy_scene = ExtResource("2_qd3o1")
 difficulty_manager = NodePath("../DifficultyManager")
+victory_layer = NodePath("../UserInterface")
 
 [node name="Road" type="CSGPolygon3D" parent="EnemyPath3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -80,10 +85,11 @@ path_interval_type = 0
 path_interval = 0.5
 path_simplify_angle = 0.0
 path_rotation = 2
-path_local = false
+path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
+material = SubResource("StandardMaterial3D_553r0")
 
 [node name="RightEdge" type="CSGPolygon3D" parent="EnemyPath3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -94,7 +100,7 @@ path_interval_type = 0
 path_interval = 0.5
 path_simplify_angle = 0.0
 path_rotation = 2
-path_local = false
+path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
@@ -108,7 +114,7 @@ path_interval_type = 0
 path_interval = 0.5
 path_simplify_angle = 0.0
 path_rotation = 2
-path_local = false
+path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
@@ -120,6 +126,7 @@ autostart = true
 
 [node name="Base" parent="." instance=ExtResource("3_1uhv6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.91, 0, -6.123)
+max_health = 50.0
 max_health_color = Color(0.145098, 0.831373, 0.141176, 1)
 
 [node name="TurretManager" type="Node3D" parent="." node_paths=PackedStringArray("enemy_path")]
@@ -149,6 +156,8 @@ text = "Money: 32"
 label_settings = SubResource("LabelSettings_q3m4m")
 
 [node name="DifficultyManager" parent="." instance=ExtResource("9_lrg76")]
+
+[node name="UserInterface" parent="." instance=ExtResource("10_m77po")]
 
 [connection signal="timeout" from="EnemyPath3D/EnemyTimer" to="EnemyPath3D" method="spawn_enemy"]
 [connection signal="stop_spawning_enemies" from="DifficultyManager" to="EnemyPath3D" method="_on_difficulty_manager_stop_spawning_enemies"]

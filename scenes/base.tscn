@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnek8573gnq1x"]
+[gd_scene load_steps=4 format=3 uid="uid://bnek8573gnq1x"]
 
 [ext_resource type="Script" path="res://scripts/base.gd" id="1_0x18u"]
+[ext_resource type="PackedScene" uid="uid://dru8x7thi06k8" path="res://assets/Base.glb" id="2_6v4vf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xqy5"]
 albedo_color = Color(0.87451, 0.203922, 0.203922, 1)
@@ -10,6 +11,7 @@ script = ExtResource("1_0x18u")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
 radius = 2.0
 height = 4.0
 sides = 32
@@ -22,3 +24,5 @@ texture_filter = 0
 text = "starting health"
 font_size = 500
 outline_size = 100
+
+[node name="Base" parent="." instance=ExtResource("2_6v4vf")]
